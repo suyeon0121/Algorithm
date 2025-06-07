@@ -1,5 +1,3 @@
-from collections import deque
-
 n = int(input())
 a, b = map(int, input().split())
 m = int(input())
@@ -12,20 +10,14 @@ for _ in range(m):
     graph[x].append(y)
     graph[y].append(x)
 
-def bfs(v):
-    que = deque([v])
+def dfs(v):
     visited[v] = True
-    
-    while que:
-        v = que.popleft()
-        
-        for i in graph[v]:
-            if not visited[i]:
-                res[i] = res[v] + 1
-                visited[i] = True
-                que.append(i)
+    for i in graph[v]:
+        if not visited[i]:
+            res[i] = res[v] + 1
+            dfs(i)
 
-bfs(a)
+dfs(a)
 if res[b] > 0:
     print(res[b])
 else:
